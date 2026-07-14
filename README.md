@@ -174,6 +174,19 @@ examen-ia-ddos-utp/
   MLddos.ipynb              # Notebook principal con toda la simulacion
   README.md                 # Este archivo
   .gitignore                # Archivos excluidos del repositorio
+  requirements.txt          # Dependencias Python
+  presentacion_ddos_utp.pptx # Presentacion PowerPoint (31 diapositivas)
+  create_pptx.py            # Script para generar la presentacion
+  demo_viva.py              # Demo en vivo: deteccion + bloqueo DDoS
+  http_flood.py             # Generador de HTTP flood para demo
+  syn_flood.py              # Generador de SYN flood para demo
+  diagramas/                # Diagramas draw.io (6 diagramas)
+    01_arquitectura_sistema.drawio
+    02_pipeline_ml.drawio
+    03_secuencia_deteccion.drawio
+    04_topologia_red.drawio
+    05_clases_ml.drawio
+    06_flujo_datos_dfd.drawio
   resultados/               # Salidas generadas por el notebook
     matrices_confusion.png
     curvas_roc.png
@@ -183,6 +196,10 @@ examen-ia-ddos-utp/
     distribucion_clases.png
     resultados_modelos.csv
     reporte_clasificacion.txt
+    modelo_rf.pkl           # Modelo Random Forest serializado
+    scaler.pkl              # StandardScaler serializado
+    label_encoder.pkl       # LabelEncoder serializado
+    demo_log.json           # Log de la demostracion en vivo
   03-11/                    # [NO EN REPO] Dataset CIC-DDoS2019 (~8.2 GB)
   CSV-03-11.zip             # [NO EN REPO] Dataset comprimido (~877 MB)
 ```
@@ -243,19 +260,21 @@ Dataset CIC-DDoS2019 (8.2 GB)
 
 ## Referencias
 
-1. Sharafaldin, I., Lashkari, A. H., & Ghorbani, A. A. (2018). Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization. *4th International Conference on Information Systems Security and Privacy (ICISSP)*, 108-116.
+1. Sharafaldin, I., Lashkari, A. H., Hakak, S., & Ghorbani, A. A. (2019). Developing realistic distributed denial of service (DDoS) attack dataset and taxonomy. *ACM International Conference Proceeding Series*, 70-75. https://doi.org/10.1145/3340997.3341005
 
-2. Tavallaee, M., Bagheri, E., Lu, W., & Ghorbani, A. A. (2009). A Detailed Analysis of the KDD CUP 99 Data Set. *IEEE Symposium on Computational Intelligence for Security and Defense Applications (CISDA)*.
+2. Becerra-Suarez, F. L., Fernandez-Roman, I., & Forero, M. G. (2024). Improvement of distributed denial of service attack detection through machine learning and data processing. *Mathematics*, 12(9), 1294. https://doi.org/10.3390/math12091294
 
-3. Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining*, 785-794.
+3. Najam, N. R. & Abduljawad, R. A. (2023). RF-RFE-SMOTE: A DoS and DDoS attack detection framework. *NTU Journal of Engineering and Technology*, 2(2), 29-47. https://doi.org/10.56286/ntujet.v2i2.436
 
-4. Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5-32.
+4. Ma, R., Chen, X., & Zhai, R. (2023). A DDoS attack detection method based on natural selection of features and models. *Electronics*, 12(4), 1059. https://doi.org/10.3390/electronics12041059
 
-5. Canadian Institute for Cybersecurity. (2019). CIC-DDoS2019 Dataset. *University of New Brunswick*. https://www.unb.ca/cic/datasets/ddos-2019.html
+5. Ali, T. E., Chong, Y.-W., & Manickam, S. (2023). Machine learning techniques to detect a DDoS attack in SDN: A systematic review. *Applied Sciences*, 13(5), 3183. https://doi.org/10.3390/app13053183
 
-6. NETSCOUT Arbor. (2024). *19th Annual Worldwide Infrastructure Security Report*.
+6. Mualfah, D., Ardiansyah, R., & Gunawan, R. (2025). Classification of DDoS attacks using the random forest method and class weight technique on the CICDDoS2019 dataset. *Jurnal CoSciTech*, 6(3), 530-535. https://doi.org/10.37859/coscitech.v6i3.10731
 
-7. MITRE Corporation. (2024). MITRE ATT&CK — Denial of Service. https://attack.mitre.org/techniques/T1499/
+7. Mittal, M., Kumar, K., & Behal, S. (2022). Deep learning approaches for detecting DDoS attacks: A systematic review. *Soft Computing*. https://doi.org/10.1007/s00500-021-06608-1
+
+8. Canadian Institute for Cybersecurity. (2019). CIC-DDoS2019 Dataset. *University of New Brunswick*. https://www.unb.ca/cic/datasets/ddos-2019.html
 
 ---
 
