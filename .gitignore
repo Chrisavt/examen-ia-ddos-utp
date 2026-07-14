@@ -20,6 +20,7 @@ exam_ia_venv/
 
 # === Demo ===
 test_demo.py
+_http_tmp/
 resultados/demo_log.json
 
 # === Sistema ===

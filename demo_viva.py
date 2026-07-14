@@ -105,20 +105,24 @@ def start_http_server(port):
     import http.server
     import socketserver
 
-    os.chdir('/tmp')
-    handler = http.server.SimpleHTTPRequestHandler
-
-    # Crear archivo de respuesta
-    with open('/tmp/index.html', 'w') as f:
+    # Usar directorio del proyecto en vez de /tmp
+    serve_dir = os.path.join(BASE_DIR, '_http_tmp')
+    os.makedirs(serve_dir, exist_ok=True)
+    with open(os.path.join(serve_dir, 'index.html'), 'w') as f:
         f.write('<html><body><h1>Servidor de Demo - DDoS Detection</h1></body></html>')
+
+    original_dir = os.getcwd()
+    os.chdir(serve_dir)
+    handler = http.server.SimpleHTTPRequestHandler
 
     class QuietHandler(handler):
         def log_message(self, format, *args):
-            pass  # Silenciar logs
+            pass
 
     server = socketserver.TCPServer(("", port), QuietHandler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
+    os.chdir(original_dir)
     print(f"{GREEN}  [OK] Servidor HTTP activo en puerto {port}{RESET}")
     return server
 
@@ -290,9 +294,11 @@ def run_demo():
     # ─── Verificar permisos ───
     use_sudo = os.geteuid() == 0
     if use_sudo:
-        print(f"{YELLOW}  [!] Ejecutandose como ROOT — bloqueo activo{RESET}")
+        print(f"{YELLOW}  [!] Ejecutandose como ROOT — captura + bloqueo activos{RESET}")
     else:
-        print(f"{YELLOW}  [!] Sin root — modo deteccion (sin bloqueo real){RESET}")
+        print(f"{RED}  [!] Sin root — scapy NO puede capturar paquetes{RESET}")
+        print(f"{RED}  [!] Ejecuta con: sudo /mnt/c/Users/chris/exam_ia_venv/bin/python3 demo_viva.py{RESET}")
+        sys.exit(1)
 
     # ─── Iniciar servidor HTTP ───
     print(f"\n{BOLD}[2/5] Iniciando servidor HTTP de prueba...{RESET}")
@@ -312,21 +318,20 @@ def run_demo():
     def packet_callback(pkt):
         """Callback para cada paquete capturado."""
         if pkt.haslayer(IP) and pkt.haslayer(TCP):
-            src = pkt[IP].src
-            dst = pkt[IP].dst
-            sport = pkt[TCP].sport
-            dport = pkt[TCP].dport
-            flow_key = (src, dst, sport, dport)
-            flows[flow_key].append(pkt)
-            captured_packets.append(pkt)
+            if pkt[TCP].dport == TARGET_PORT or pkt[TCP].sport == TARGET_PORT:
+                src = pkt[IP].src
+                dst = pkt[IP].dst
+                sport = pkt[TCP].sport
+                dport = pkt[TCP].dport
+                flow_key = (src, dst, sport, dport)
+                flows[flow_key].append(pkt)
+                captured_packets.append(pkt)
 
     # Capturar en hilo separado
-    capture_stop = threading.Event()
-
     def capture_thread():
         try:
             sniff(
-                filter=f"host {TARGET_IP} and tcp port {TARGET_PORT}",
+                iface="lo",
                 prn=packet_callback,
                 timeout=CAPTURE_DURATION,
                 store=False
