@@ -1,0 +1,48 @@
+REPORTE DE CLASIFICACIÓN — DETECCIÓN DDoS CON DATOS REALES
+Dataset: CIC-DDoS2019 (Canadian Institute for Cybersecurity)
+======================================================================
+
+RANDOM FOREST
+              precision    recall  f1-score   support
+
+      BENIGN       1.00      1.00      1.00      3000
+        LDAP       0.98      0.99      0.99      3000
+       MSSQL       0.98      0.96      0.97      3000
+     NetBIOS       0.81      0.40      0.53      3000
+     Portmap       0.59      0.90      0.72      3000
+         Syn       1.00      1.00      1.00      3000
+         UDP       0.99      0.99      0.99      3000
+
+    accuracy                           0.89     21000
+   macro avg       0.91      0.89      0.88     21000
+weighted avg       0.91      0.89      0.88     21000
+
+XGBOOST
+              precision    recall  f1-score   support
+
+      BENIGN       1.00      1.00      1.00      3000
+        LDAP       0.97      0.99      0.98      3000
+       MSSQL       0.98      0.96      0.97      3000
+     NetBIOS       0.86      0.67      0.75      3000
+     Portmap       0.72      0.89      0.80      3000
+         Syn       1.00      1.00      1.00      3000
+         UDP       0.99      0.99      0.99      3000
+
+    accuracy                           0.93     21000
+   macro avg       0.93      0.93      0.93     21000
+weighted avg       0.93      0.93      0.93     21000
+
+MLP (RED NEURONAL)
+              precision    recall  f1-score   support
+
+      BENIGN       0.99      1.00      1.00      3000
+        LDAP       0.97      0.98      0.98      3000
+       MSSQL       0.95      0.95      0.95      3000
+     NetBIOS       0.69      0.23      0.35      3000
+     Portmap       0.53      0.88      0.66      3000
+         Syn       1.00      1.00      1.00      3000
+         UDP       0.98      0.97      0.97      3000
+
+    accuracy                           0.86     21000
+   macro avg       0.87      0.86      0.84     21000
+weighted avg       0.87      0.86      0.84     21000

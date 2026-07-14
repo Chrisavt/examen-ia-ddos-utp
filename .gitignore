@@ -1,0 +1,25 @@
+# === Dataset CIC-DDoS2019 (demasiado grande para GitHub) ===
+03-11/
+CSV-03-11.zip
+*.zip
+
+# === Modelos serializados (generados por el notebook) ===
+resultados/*.pkl
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# === Jupyter ===
+.ipynb_checkpoints/
+
+# === Entorno virtual ===
+exam_ia_venv/
+
+# === Sistema ===
+.DS_Store
+Thumbs.db
+*.swp
+*~
