@@ -210,63 +210,68 @@ def extract_flow_features(packets_list):
     # UDP Flood: pocos paquetes TCP, muchos UDP bytes
     # HTTP Flood: muchos PSH+ACK
 
-    features = {
-        ' Fwd Packet Length Max': max(fwd_len),
-        ' Fwd Packet Length Min': min(fwd_len),
-        ' Fwd Packet Length Mean': np.mean(fwd_len),
-        ' Fwd Packet Length Std': np.std(fwd_len) if len(fwd_len) > 1 else 0,
-        'Bwd Packet Length Max': max(bwd_len),
-        'Bwd Packet Length Min': min(bwd_len),
-        'Bwd Packet Length Mean': np.mean(bwd_len),
-        'Bwd Packet Length Std': np.std(bwd_len) if len(bwd_len) > 1 else 0,
-        'Flow Bytes/s': total_bytes / max(duration, 0.001),
-        'Flow Packets/s': total_packets / max(duration, 0.001),
-        ' Flow IAT Mean': np.mean(iats),
-        ' Flow IAT Std': np.std(iats) if len(iats) > 1 else 0,
-        ' Flow IAT Max': max(iats),
-        ' Flow IAT Min': min(iats),
-        'Fwd IAT Total': sum(fwd_ias) if fwd_ias else 0,
-        ' Fwd IAT Mean': np.mean(fwd_ias) if fwd_ias else 0,
-        ' Fwd IAT Std': np.std(fwd_ias) if len(fwd_ias) > 1 else 0,
-        ' Fwd IAT Max': max(fwd_ias) if fwd_ias else 0,
-        ' Fwd IAT Min': min(fwd_ias) if fwd_ias else 0,
-        'Bwd IAT Total': sum(bwd_ias) if bwd_ias else 0,
-        ' Bwd IAT Mean': np.mean(bwd_ias) if bwd_ias else 0,
-        ' Bwd IAT Std': np.std(bwd_ias) if len(bwd_ias) > 1 else 0,
-        ' Bwd IAT Max': max(bwd_ias) if bwd_ias else 0,
-        ' Bwd IAT Min': min(bwd_ias) if bwd_ias else 0,
-        'Fwd Header Length': fwd_header_len,
-        'Bwd Header Length': bwd_header_len,
-        'Fwd Packets/s': len(fwd_packets) / max(duration, 0.001),
-        'Bwd Packets/s': len(bwd_packets) / max(duration, 0.001),
-        ' Min Packet Length': min(fwd_len + bwd_len),
-        ' Max Packet Length': max(fwd_len + bwd_len),
-        ' Packet Length Mean': np.mean(fwd_len + bwd_len),
-        ' Packet Length Std': np.std(fwd_len + bwd_len) if total_packets > 1 else 0,
-        ' Down/Up Ratio': len(bwd_packets) / max(len(fwd_packets), 1),
-        ' Average Packet Size': total_bytes / max(total_packets, 1),
-        ' Avg Fwd Segment Size': np.mean(fwd_len),
-        ' Avg Bwd Segment Size': np.mean(bwd_len),
-        ' Init Fwd Win Byts': 0,
-        ' Init Bwd Win Byts': 0,
-        'Fwd Header Length.1': fwd_header_len,
-        ' Subflow Fwd Bytes': sum(fwd_len),
-        ' Subflow Bwd Bytes': sum(bwd_len),
-        'SYN Flag Count': flags['SYN'],
-        'RST Flag Count': flags['RST'],
-        'PSH Flag Count': flags['PSH'],
-        'ACK Flag Count': flags['ACK'],
-        'FIN Flag Count': flags['FIN'],
-        'ECE Flag Count': flags['ECE'],
-        'Idle Mean': np.mean(iats) if len(iats) > 3 else 0,
-        'Idle Std': np.std(iats) if len(iats) > 3 else 0,
-        'Idle Max': max(iats) if len(iats) > 3 else 0,
-        'Idle Min': min(iats) if len(iats) > 3 else 0,
-        'Active Mean': duration / max(total_packets, 1),
-        'Active Std': 0,
-        'Active Max': duration,
-        'Active Min': duration,
-    }
+    all_len = fwd_len + bwd_len
+    syn_count = flags['SYN']
+    psh_count = flags['PSH']
+    ack_count = flags['ACK']
+
+    features = np.zeros(77, dtype=np.float64)
+    features[0]  = max(fwd_len)
+    features[1]  = min(fwd_len)
+    features[2]  = np.mean(fwd_len)
+    features[3]  = np.std(fwd_len) if len(fwd_len) > 1 else 0
+    features[4]  = max(bwd_len)
+    features[5]  = min(bwd_len)
+    features[6]  = np.mean(bwd_len)
+    features[7]  = np.std(bwd_len) if len(bwd_len) > 1 else 0
+    features[8]  = total_bytes / max(duration, 0.001)
+    features[9]  = total_packets / max(duration, 0.001)
+    features[10] = np.mean(iats)
+    features[11] = np.std(iats) if len(iats) > 1 else 0
+    features[12] = max(iats)
+    features[13] = min(iats)
+    features[14] = sum(fwd_ias) if fwd_ias else 0
+    features[15] = np.mean(fwd_ias) if fwd_ias else 0
+    features[16] = np.std(fwd_ias) if len(fwd_ias) > 1 else 0
+    features[17] = max(fwd_ias) if fwd_ias else 0
+    features[18] = min(fwd_ias) if fwd_ias else 0
+    features[19] = sum(bwd_ias) if bwd_ias else 0
+    features[20] = np.mean(bwd_ias) if bwd_ias else 0
+    features[21] = np.std(bwd_ias) if len(bwd_ias) > 1 else 0
+    features[22] = max(bwd_ias) if bwd_ias else 0
+    features[23] = min(bwd_ias) if bwd_ias else 0
+    features[24] = fwd_header_len
+    features[25] = bwd_header_len
+    features[26] = len(fwd_packets) / max(duration, 0.001)
+    features[27] = len(bwd_packets) / max(duration, 0.001)
+    features[28] = min(all_len) if all_len else 0
+    features[29] = max(all_len) if all_len else 0
+    features[30] = np.mean(all_len) if all_len else 0
+    features[31] = np.std(all_len) if len(all_len) > 1 else 0
+    features[32] = len(bwd_packets) / max(len(fwd_packets), 1)
+    features[33] = total_bytes / max(total_packets, 1)
+    features[34] = np.mean(fwd_len)
+    features[35] = np.mean(bwd_len) if bwd_len else 0
+    features[36] = 0
+    features[37] = 0
+    features[38] = fwd_header_len
+    features[39] = sum(fwd_len)
+    features[40] = sum(bwd_len)
+    features[41] = syn_count
+    features[42] = flags['RST']
+    features[43] = psh_count
+    features[44] = ack_count
+    features[45] = flags['FIN']
+    features[46] = flags['ECE']
+    features[47] = np.mean(iats) if len(iats) > 3 else 0
+    features[48] = np.std(iats) if len(iats) > 3 else 0
+    features[49] = max(iats) if len(iats) > 3 else 0
+    features[50] = min(iats) if len(iats) > 3 else 0
+    features[51] = duration / max(total_packets, 1)
+    features[52] = 0
+    features[53] = duration
+    features[54] = duration
+    # features[55..76] se quedan en 0 (no calculables en tiempo real desde captura)
 
     return features
 
@@ -379,8 +384,7 @@ def run_demo():
                 continue
 
             # Predecir
-            feature_values = [features.get(f, 0) for f in FEATURE_NAMES]
-            X = np.array(feature_values, dtype=np.float64).reshape(1, -1)
+            X = features.reshape(1, -1)
             X = np.nan_to_num(X, nan=0.0, posinf=0.0, neginf=0.0)
             X_scaled = scaler.transform(X)
             prediction = model.predict(X_scaled)
