@@ -196,8 +196,15 @@ def extract_flow_features(packets_list):
                 bwd_ias.append(t - prev_bwd)
             prev_bwd = t
 
-    fwd_header_len = sum(len(pkt) - (pkt[IP].header_len if pkt.haslayer(IP) else 0) for pkt in packets_list if pkt.haslayer(IP) and pkt[IP].src == packets_list[0][IP].src)
-    bwd_header_len = sum(len(pkt) - (pkt[IP].header_len if pkt.haslayer(IP) else 0) for pkt in packets_list if pkt.haslayer(IP) and pkt[IP].src != packets_list[0][IP].src)
+    fwd_header_len = 0
+    bwd_header_len = 0
+    for pkt in packets_list:
+        if pkt.haslayer(IP):
+            ihl = pkt[IP].ihl * 4
+            if pkt[IP].src == packets_list[0][IP].src:
+                fwd_header_len += ihl
+            else:
+                bwd_header_len += ihl
 
     # SYN Flood: muchos SYN, pocos ACK
     # UDP Flood: pocos paquetes TCP, muchos UDP bytes
