@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-14T00:00:00.000Z" agent="opencode" version="24.0.0">
+  <diagram id="topology" name="Topologia de Red - Demo">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Topologia de Red — Ambiente de Prueba DDoS Detection&lt;/b&gt;" style="text;html=1;align=center;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="800" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== LOCAL MACHINE ====== -->
+        <mxCell id="machine" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="1240" height="720" as="geometry"/>
+        </mxCell>
+        <mxCell id="machine_label" value="&lt;b&gt;Maquina Local (WSL Ubuntu / 16GB RAM)&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="100" y="90" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== LOOPBACK INTERFACE ====== -->
+        <mxCell id="loopback" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="350" y="200" width="800" height="500" as="geometry"/>
+        </mxCell>
+        <mxCell id="loopback_label" value="&lt;b&gt;Interfaz Loopback (lo / 127.0.0.1)&lt;/b&gt;&lt;br&gt;Todo el trafico es local, sin red fisica" style="text;html=1;align=center;fontSize=11;fontColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="550" y="210" width="400" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ATTACKER ====== -->
+        <mxCell id="attacker" value="&lt;b&gt;ATACANTE&lt;/b&gt;&lt;br&gt;&lt;br&gt;python3 http_flood.py&lt;br&gt;python3 syn_flood.py&lt;br&gt;&lt;br&gt;Genera trafico malicioso&lt;br&gt;contra puerto 8080" style="shape=computer;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="120" y="350" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== TARGET SERVER ====== -->
+        <mxCell id="http_server" value="&lt;b&gt;SERVIVIO HTTP&lt;/b&gt;&lt;br&gt;&lt;br&gt;Python http.server&lt;br&gt;Puerto: 8080&lt;br&gt;QuietHandler (sin ruido)" style="shape=server;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="350" width="170" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== DETECTION ENGINE ====== -->
+        <mxCell id="detector" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="290" width="500" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="detector_label" value="&lt;b&gt;MOTOR DE DETECCION (demo_viva.py)&lt;/b&gt;" style="text;html=1;align=center;fontSize=12;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="750" y="300" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Capture -->
+        <mxCell id="scapy" value="&lt;b&gt;Scapy Sniffer&lt;/b&gt;&lt;br&gt;sniff(iface='lo')&lt;br&gt;Filtro: TCP port 8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="670" y="330" width="160" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Feature Extraction -->
+        <mxCell id="features" value="&lt;b&gt;Extraccion de Features&lt;/b&gt;&lt;br&gt;classify_packet()&lt;br&gt;77 features por flujo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="670" y="420" width="160" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Heuristic Engine -->
+        <mxCell id="heuristic" value="&lt;b&gt;Heuristica&lt;/b&gt;&lt;br&gt;SYN ratio &gt; 70%&lt;br&gt;PPS &gt; 50&lt;br&gt;RST ratio &gt; 50%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="870" y="330" width="140" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ML Classifier -->
+        <mxCell id="ml" value="&lt;b&gt;Random Forest&lt;/b&gt;&lt;br&gt;modelo_rf.pkl&lt;br&gt;200 arboles&lt;br&gt;7 clases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="330" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Alert -->
+        <mxCell id="alert" value="&lt;b&gt;Alerta&lt;/b&gt;&lt;br&gt;Terminal coloreada&lt;br&gt;Timestamp + IP + Tipo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="870" y="450" width="150" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Block -->
+        <mxCell id="block" value="&lt;b&gt;Bloqueo&lt;/b&gt;&lt;br&gt;iptables -A INPUT&lt;br&gt;-s IP -j DROP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="450" width="130" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Log -->
+        <mxCell id="log" value="&lt;b&gt;Log JSON&lt;/b&gt;" style="shape=document;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="870" y="540" width="100" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ARROWS ====== -->
+        <!-- Attacker → Network -->
+        <mxCell id="a1" value="TCP SYN/Flood" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;strokeWidth=2;" edge="1" source="attacker" target="http_server" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Network → Server -->
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="http_server" target="scapy" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Scapy → Features -->
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="scapy" target="features" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Features → Heuristic -->
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="features" target="heuristic" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Features → ML -->
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="features" target="ml" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Heuristic → Alert -->
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="heuristic" target="alert" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Alert → Block -->
+        <mxCell id="a7" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" source="alert" target="block" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Alert → Log -->
+        <mxCell id="a8" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" source="alert" target="log" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== LEGEND ====== -->
+        <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="650" width="250" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="&lt;b&gt;Leyenda&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="95" y="660" width="80" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1" value="" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="95" y="690" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1t" value="Ataque / Alerta / Bloqueo" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="688" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="95" y="715" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2t" value="Deteccion / ML" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="713" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="95" y="740" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3t" value="Red / Servidor / Captura" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="738" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4" value="" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="95" y="765" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4t" value="Heuristica / Features" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="763" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

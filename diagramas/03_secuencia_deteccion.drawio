@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-14T00:00:00.000Z" agent="opencode" version="24.0.0">
+  <diagram id="seq-detection" name="Secuencia - Deteccion en Tiempo Real">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Diagrama de Secuencia — Deteccion y Bloqueo de DDoS en Tiempo Real&lt;/b&gt;" style="text;html=1;align=center;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="10" width="900" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Actors / Objects -->
+        <mxCell id="attacker" value="&lt;b&gt;Atacante&lt;/b&gt;&lt;br&gt;(http_flood.py /&lt;br&gt;syn_flood.py)" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="100" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="net" value="&lt;b&gt;Red (lo)&lt;/b&gt;&lt;br&gt;Interfaz loopback" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="250" y="70" width="130" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="capture_obj" value="&lt;b&gt;Captura&lt;/b&gt;&lt;br&gt;scapy.sniff()" style="shape=instance;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="460" y="70" width="120" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="heur_obj" value="&lt;b&gt;Heuristica&lt;/b&gt;&lt;br&gt;detect_attack()" style="shape=instance;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="660" y="70" width="130" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_obj" value="&lt;b&gt;Modelo ML&lt;/b&gt;&lt;br&gt;RF predict()" style="shape=instance;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="870" y="70" width="120" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="response_obj" value="&lt;b&gt;Respuesta&lt;/b&gt;&lt;br&gt;block_ip() / alert()" style="shape=instance;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="70" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="ll_attacker" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="180" as="sourcePoint"/>
+            <mxPoint x="110" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_net" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="315" y="180" as="sourcePoint"/>
+            <mxPoint x="315" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_capture" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="180" as="sourcePoint"/>
+            <mxPoint x="520" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_heur" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="725" y="180" as="sourcePoint"/>
+            <mxPoint x="725" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_ml" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="930" y="180" as="sourcePoint"/>
+            <mxPoint x="930" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_resp" style="endArrow=none;dashed=1;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1150" y="180" as="sourcePoint"/>
+            <mxPoint x="1150" y="900" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- === MESSAGES === -->
+
+        <!-- Phase 1: System Startup -->
+        <mxCell id="phase1" value="&lt;b&gt;Fase 1: Inicializacion&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;fontColor=#666666;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m1" value="1. Iniciar servidor HTTP :8080" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="215" as="sourcePoint"/>
+            <mxPoint x="315" y="215" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="2. Cargar modelo RF + Scaler + Encoder" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="235" as="sourcePoint"/>
+            <mxPoint x="930" y="235" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="3. Iniciar sniff(iface=lo, port=8080)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="255" as="sourcePoint"/>
+            <mxPoint x="315" y="255" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Phase 2: Attack Detection Loop -->
+        <mxCell id="phase2" value="&lt;b&gt;Fase 2: Bucle de Deteccion (cada 2-5s)&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;fontColor=#666666;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4" value="4. TCP SYN → 127.0.0.1:8080" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="310" as="sourcePoint"/>
+            <mxPoint x="315" y="310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="5. Paquete capturado (IP, TCP, payload)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#6c8ebf;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="315" y="340" as="sourcePoint"/>
+            <mxPoint x="520" y="340" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" value="6. classify_packet(pkt) → info{type, flags, src, len}" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="370" as="sourcePoint"/>
+            <mxPoint x="520" y="370" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Heuristic check -->
+        <mxCell id="m7" value="7. detect_attack_heuristic(packet_infos)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#d6b656;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="410" as="sourcePoint"/>
+            <mxPoint x="725" y="410" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Alt box: Attack detected -->
+        <mxCell id="alt_box" value="" style="shape=frame;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="440" y="430" width="820" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt_label" value="&lt;b&gt;[ataque detectado]&lt;/b&gt; (SYN ratio &gt; 70% o PPS &gt; 50)" style="text;html=1;align=left;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="435" width="350" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m8" value="8. Retorno: ('Syn Flood', 91%, 'SYN ratio: 91%')" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="725" y="470" as="sourcePoint"/>
+            <mxPoint x="520" y="470" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Alert -->
+        <mxCell id="m9" value="9. print ALERTA: Syn Flood de 127.0.0.1 (91%)" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="500" as="sourcePoint"/>
+            <mxPoint x="520" y="500" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ML Classification -->
+        <mxCell id="m10" value="10. extract_flow_features() → 77 features" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="530" as="sourcePoint"/>
+            <mxPoint x="725" y="530" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" value="11. scaler.transform(X) → model.predict()" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="725" y="560" as="sourcePoint"/>
+            <mxPoint x="930" y="560" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" value="12. Retorno: label='BENIGN', conf=64.9%" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="930" y="590" as="sourcePoint"/>
+            <mxPoint x="725" y="590" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Blocking -->
+        <mxCell id="m13" value="13. block_ip('127.0.0.1')" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="620" as="sourcePoint"/>
+            <mxPoint x="1150" y="620" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" value="14. iptables -A INPUT -s 127.0.0.1 -j DROP" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1150" y="640" as="sourcePoint"/>
+            <mxPoint x="520" y="640" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- End alt box -->
+        <mxCell id="end_alt" value="&lt;b&gt;[fin]&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="660" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Phase 3: Summary -->
+        <mxCell id="phase3" value="&lt;b&gt;Fase 3: Resumen (t=60s)&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;fontColor=#666666;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="700" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m15" value="15. Contar alertas por tipo" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="730" as="sourcePoint"/>
+            <mxPoint x="520" y="730" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m16" value="16. Guardar demo_log.json" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="760" as="sourcePoint"/>
+            <mxPoint x="1150" y="760" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m17" value="17. Mostrar resumen: 15 alertas, 1 IP bloqueada" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="790" as="sourcePoint"/>
+            <mxPoint x="110" y="790" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Note -->
+        <mxCell id="note1" value="&lt;i&gt;Nota: El modelo ML clasifica como BENIGN en&lt;br&gt;localhost porque las features simplificadas no&lt;br&gt;coinciden con la distribucion del CICFlowMeter.&lt;br&gt;En produccion con tráfico real, el modelo ML&lt;br&gt;funciona como clasificador principal.&lt;/i&gt;" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="820" width="340" height="80" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

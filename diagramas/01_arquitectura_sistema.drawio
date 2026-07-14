@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-14T00:00:00.000Z" agent="opencode" version="24.0.0">
+  <diagram id="arch-ddos" name="Arquitectura del Sistema">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Arquitectura del Sistema de Deteccion DDoS con ML&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 1: FUENTE DE DATOS ====== -->
+        <mxCell id="layer1_label" value="&lt;b&gt;FUENTE DE DATOS&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="dataset" value="&lt;b&gt;CIC-DDoS2019&lt;/b&gt;&lt;br&gt;Dataset CSV (8.2 GB)&lt;br&gt;22M+ flujos etiquetados" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="160" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 2: PREPROCESAMIENTO ====== -->
+        <mxCell id="layer2_label" value="&lt;b&gt;PREPROCESAMIENTO&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="320" y="80" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="cleaning" value="&lt;b&gt;Limpieza de Datos&lt;/b&gt;&lt;br&gt;Valores nulos/infinitos&lt;br&gt;Eliminacion de columnas&lt;br&gt;irrelevantes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="110" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="features" value="&lt;b&gt;Extraccion de Features&lt;/b&gt;&lt;br&gt;77 caracteristicas CICFlowMeter&lt;br&gt;Flow IAT, Packet Len, Flags..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="200" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 3: ENTRENAMIENTO ====== -->
+        <mxCell id="layer3_label" value="&lt;b&gt;ENTRENAMIENTO ML&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="80" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="split" value="&lt;b&gt;Train/Test Split&lt;/b&gt;&lt;br&gt;80% / 20%" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="590" y="110" width="140" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf" value="&lt;b&gt;Random Forest&lt;/b&gt;&lt;br&gt;200 arboles&lt;br&gt;89.1% accuracy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="210" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="xgb" value="&lt;b&gt;XGBoost&lt;/b&gt;&lt;br&gt;100 boosters&lt;br&gt;92.8% accuracy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="710" y="210" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="mlp" value="&lt;b&gt;MLP Neural Net&lt;/b&gt;&lt;br&gt;3 capas ocultas&lt;br&gt;85.9% accuracy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="860" y="210" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 4: MODELO DEPLOYADO ====== -->
+        <mxCell id="layer4_label" value="&lt;b&gt;MODELO DEPLOYADO&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="model_pkl" value="&lt;b&gt;modelo_rf.pkl&lt;/b&gt;&lt;br&gt;Random Forest serializado&lt;br&gt;+ Scaler + LabelEncoder" style="shape=folder;fontSize=11;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="80" y="370" width="180" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 5: SISTEMA EN TIEMPO REAL ====== -->
+        <mxCell id="layer5_label" value="&lt;b&gt;SISTEMA EN TIEMPO REAL (DEMO)&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="320" y="340" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="capture" value="&lt;b&gt;Captura de Paquetes&lt;/b&gt;&lt;br&gt;Scapy (iface=lo)&lt;br&gt;Filtro: puerto 8080" style="shape=process;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="370" width="160" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="heuristic" value="&lt;b&gt;Deteccion Heuristica&lt;/b&gt;&lt;br&gt;SYN ratio, PPS, RST ratio&lt;br&gt;Ventana deslizante 3s" style="shape=process;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="370" width="170" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_classify" value="&lt;b&gt;Clasificacion ML&lt;/b&gt;&lt;br&gt;RF predict_proba&lt;br&gt;77 features → 7 clases" style="shape=process;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="460" width="170" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== CAPA 6: RESPUESTA ====== -->
+        <mxCell id="layer6_label" value="&lt;b&gt;RESPUESTA&lt;/b&gt;" style="text;html=1;align=left;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="760" y="340" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="alert" value="&lt;b&gt;Alerta Visual&lt;/b&gt;&lt;br&gt;Terminal coloreada&lt;br&gt;Timestamp + IP + Tipo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="760" y="370" width="160" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="block" value="&lt;b&gt;Bloqueo iptables&lt;/b&gt;&lt;br&gt;iptables -A INPUT -s IP -j DROP&lt;br&gt;Simulado o real (--block)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="760" y="460" width="180" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="log" value="&lt;b&gt;Log JSON&lt;/b&gt;&lt;br&gt;demo_log.json&lt;br&gt;Timestamp, alertas, IPs" style="shape=note;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="960" y="370" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== SERVER ====== -->
+        <mxCell id="server" value="&lt;b&gt;Servidor HTTP&lt;/b&gt;&lt;br&gt;Python http.server&lt;br&gt;Puerto 8080" style="shape=server;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="460" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ARROWS ====== -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dataset" target="cleaning" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="cleaning" target="features" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="features" target="split" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="split" target="rf" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4b" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="split" target="xgb" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4c" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="split" target="mlp" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="rf" target="model_pkl" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="model_pkl" target="ml_classify" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="capture" target="heuristic" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="heuristic" target="alert" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="alert" target="block" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="alert" target="log" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="heuristic" target="ml_classify" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="capture" target="server" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

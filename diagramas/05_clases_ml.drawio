@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-14T00:00:00.000Z" agent="opencode" version="24.0.0">
+  <diagram id="class-diagram" name="Diagrama de Clases - ML">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Diagrama de Clases — Sistema de Deteccion DDoS&lt;/b&gt;" style="text;html=1;align=center;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="600" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== PacketCapture ====== -->
+        <mxCell id="cls_capture" value="&lt;b&gt;PacketCapture&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;spacingTop=4;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="260" height="280" as="geometry"/>
+        </mxCell>
+        <mxCell id="capture_attrs" value="- iface: str&#xa;- target_port: int&#xa;- duration: int&#xa;- captured_packets: list&#xa;- packet_infos: list" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_capture">
+          <mxGeometry y="30" width="260" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="capture_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_capture">
+          <mxGeometry y="110" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="capture_methods" value="+ classify_packet(pkt) → dict&#xa;+ start_capture() → list&#xa;+ packet_callback(pkt) → None" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_capture">
+          <mxGeometry y="118" width="260" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== DetectionEngine ====== -->
+        <mxCell id="cls_detect" value="&lt;b&gt;DetectionEngine&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;spacingTop=4;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="300" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="detect_attrs" value="- window_size: float&#xa;- thresholds: dict&#xa;- packet_buffer: list&#xa;- alerts_log: list&#xa;- blocked_ips: set" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_detect">
+          <mxGeometry y="30" width="300" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="detect_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_detect">
+          <mxGeometry y="110" width="300" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="detect_methods" value="+ detect_attack_heuristic(infos, start)&#xa;  → (str, float, str) | None&#xa;+ extract_flow_features(infos)&#xa;  → numpy.ndarray&#xa;+ block_ip(ip, sudo) → str&#xa;+ run_demo() → None" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_detect">
+          <mxGeometry y="118" width="300" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== MLClassifier ====== -->
+        <mxCell id="cls_ml" value="&lt;b&gt;MLClassifier&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;spacingTop=4;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="780" y="60" width="280" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_attrs" value="- model: RandomForestClassifier&#xa;- scaler: StandardScaler&#xa;- encoder: LabelEncoder&#xa;- feature_names: list[str]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_ml">
+          <mxGeometry y="30" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_ml">
+          <mxGeometry y="100" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_methods" value="+ load_model(path) → None&#xa;+ predict(features) → str&#xa;+ predict_proba(features) → ndarray&#xa;+ get_confidence(features) → float" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_ml">
+          <mxGeometry y="108" width="280" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ResponseAction ====== -->
+        <mxCell id="cls_response" value="&lt;b&gt;ResponseAction&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;spacingTop=4;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="780" y="360" width="280" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="response_attrs" value="- use_sudo: bool&#xa;- blocked_ips: set&#xa;- log_path: str" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_response">
+          <mxGeometry y="30" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="response_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_response">
+          <mxGeometry y="80" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="response_methods" value="+ block_ip(ip) → str&#xa;+ log_alert(alert) → None&#xa;+ generate_report() → dict&#xa;+ save_log(data) → None" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_response">
+          <mxGeometry y="88" width="280" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== DatasetLoader ====== -->
+        <mxCell id="cls_data" value="&lt;b&gt;DatasetLoader&lt;/b&gt;" style="swimlane;fontStyle=1;align=center;spacingTop=4;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="400" width="280" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="data_attrs" value="- csv_path: str&#xa;- df: DataFrame&#xa;- feature_columns: list[str]" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_data">
+          <mxGeometry y="30" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="data_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;" vertex="1" parent="cls_data">
+          <mxGeometry y="80" width="280" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="data_methods" value="+ load_csv() → DataFrame&#xa;+ clean_data() → DataFrame&#xa;+ encode_labels() → ndarray&#xa;+ split_data(test_size) → tuple" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=11;html=1;" vertex="1" parent="cls_data">
+          <mxGeometry y="88" width="280" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ARROWS (relationships) ====== -->
+        <!-- DetectionEngine uses PacketCapture -->
+        <mxCell id="r1" value="usa" style="endArrow=open;endSize=12;html=1;fontSize=10;fontColor=#666666;" edge="1" source="cls_detect" target="cls_capture" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DetectionEngine uses MLClassifier -->
+        <mxCell id="r2" value="usa" style="endArrow=open;endSize=12;html=1;fontSize=10;fontColor=#666666;" edge="1" source="cls_detect" target="cls_ml" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DetectionEngine uses ResponseAction -->
+        <mxCell id="r3" value="usa" style="endArrow=open;endSize=12;html=1;fontSize=10;fontColor=#666666;" edge="1" source="cls_detect" target="cls_response" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DatasetLoader feeds MLClassifier -->
+        <mxCell id="r4" value="entrena" style="endArrow=open;endSize=12;html=1;fontSize=10;fontColor=#666666;dashed=1;" edge="1" source="cls_data" target="cls_ml" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="510"/>
+              <mxPoint x="380" y="190"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

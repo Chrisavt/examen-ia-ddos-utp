@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-07-14T00:00:00.000Z" agent="opencode" version="24.0.0">
+  <diagram id="dfd" name="DFD - Flujo de Datos ML">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Diagrama de Flujo de Datos (DFD) — Pipeline ML para Deteccion DDoS&lt;/b&gt;" style="text;html=1;align=center;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="10" width="900" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== EXTERNAL ENTITIES ====== -->
+        <mxCell id="ent_dataset" value="&lt;b&gt;CIC-DDoS2019&lt;/b&gt;&lt;br&gt;Dataset CSV" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_traffic" value="&lt;b&gt;Trafico de Red&lt;/b&gt;&lt;br&gt;Paquetes en vivo" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="600" width="140" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_user" value="&lt;b&gt;Operador&lt;/b&gt;&lt;br&gt;(Terminal)" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="400" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== PROCESSES ====== -->
+        <mxCell id="p1" value="&lt;b&gt;P1&lt;/b&gt;&lt;br&gt;Carga y Limpieza&lt;br&gt;de Datos" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="85" width="160" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2" value="&lt;b&gt;P2&lt;/b&gt;&lt;br&gt;Extraccion de&lt;br&gt;Features (77)" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="85" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3" value="&lt;b&gt;P3&lt;/b&gt;&lt;br&gt;Entrenamiento&lt;br&gt;de Modelos" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="85" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4" value="&lt;b&gt;P4&lt;/b&gt;&lt;br&gt;Evaluacion&lt;br&gt;y Metricas" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="85" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Real-time processes -->
+        <mxCell id="p5" value="&lt;b&gt;P5&lt;/b&gt;&lt;br&gt;Captura en&lt;br&gt;Tiempo Real" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="590" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6" value="&lt;b&gt;P6&lt;/b&gt;&lt;br&gt;Deteccion&lt;br&gt;Heuristica" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="590" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p7" value="&lt;b&gt;P7&lt;/b&gt;&lt;br&gt;Clasificacion&lt;br&gt;ML (RF)" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="590" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p8" value="&lt;b&gt;P8&lt;/b&gt;&lt;br&gt;Respuesta&lt;br&gt;(Alerta + Bloqueo)" style="shape=roundedRectangle;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="590" width="170" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== DATA STORES ====== -->
+        <mxCell id="d1" value="&lt;b&gt;D1&lt;/b&gt; CSV Dataset" style="shape=parallelLine;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;boundedLbl=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="280" y="230" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="d2" value="&lt;b&gt;D2&lt;/b&gt; Features Procesadas" style="shape=parallelLine;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;boundedLbl=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="530" y="230" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="d3" value="&lt;b&gt;D3&lt;/b&gt; Modelos Entrenados (.pkl)" style="shape=parallelLine;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;boundedLbl=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="770" y="230" width="220" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="d4" value="&lt;b&gt;D4&lt;/b&gt; Metricas de Evaluacion" style="shape=parallelLine;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;boundedLbl=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="230" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="d5" value="&lt;b&gt;D5&lt;/b&gt; Log de Alertas (JSON)" style="shape=parallelLine;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;boundedLbl=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="700" width="200" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== ARROWS ====== -->
+        <!-- Offline pipeline -->
+        <mxCell id="a1" value="CSV crudo" style="html=1;fontSize=9;" edge="1" source="ent_dataset" target="p1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" value="datos limpios" style="html=1;fontSize=9;" edge="1" source="p1" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" value="lee" style="html=1;fontSize=9;dashed=1;" edge="1" source="d1" target="p2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a4" value="77 features" style="html=1;fontSize=9;" edge="1" source="p2" target="d2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a5" value="lee" style="html=1;fontSize=9;dashed=1;" edge="1" source="d2" target="p3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a6" value="modelos" style="html=1;fontSize=9;" edge="1" source="p3" target="d3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a7" value="evalua" style="html=1;fontSize=9;" edge="1" source="p3" target="p4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a8" value="metricas" style="html=1;fontSize=9;" edge="1" source="p4" target="d4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Dashed line: offline / online separation -->
+        <mxCell id="sep" value="&lt;b&gt;───── Entrenamiento (offline) ─────&lt;/b&gt;" style="text;html=1;align=center;fontSize=10;fontColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="400" y="350" width="400" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="sep2" value="&lt;b&gt;───── Deteccion (tiempo real) ─────&lt;/b&gt;" style="text;html=1;align=center;fontSize=10;fontColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="400" y="400" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Real-time pipeline -->
+        <mxCell id="a9" value="paquetes" style="html=1;fontSize=9;strokeColor=#6c8ebf;" edge="1" source="ent_traffic" target="p5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a10" value="packet_infos" style="html=1;fontSize=9;" edge="1" source="p5" target="p6" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a11" value="features" style="html=1;fontSize=9;" edge="1" source="p6" target="p7" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a12" value="lee modelo" style="html=1;fontSize=9;dashed=1;strokeColor=#82b366;" edge="1" source="d3" target="p7" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="865" y="450"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a13" value="alertas" style="html=1;fontSize=9;strokeColor=#b85450;" edge="1" source="p6" target="p8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a14" value="clasificacion" style="html=1;fontSize=9;strokeColor=#82b366;" edge="1" source="p7" target="p8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a15" value="muestra" style="html=1;fontSize=9;strokeColor=#b85450;" edge="1" source="p8" target="ent_user" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a16" value="guarda" style="html=1;fontSize=9;" edge="1" source="p8" target="d5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ====== LEGEND ====== -->
+        <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="60" y="750" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="&lt;b&gt;Leyenda DFD&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="75" y="755" width="100" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_proc" value="" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="75" y="785" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_proc_t" value="Proceso (P1-P8)" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="783" width="120" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_store" value="" style="shape=parallelLine;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="75" y="810" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_store_t" value="Almacen de Datos (D1-D5)" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="808" width="180" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_entity" value="" style="shape=rectangle;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="75" y="835" width="20" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_entity_t" value="Entidad Externa" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="833" width="120" height="20" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
