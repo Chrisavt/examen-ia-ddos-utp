@@ -18,6 +18,10 @@ __pycache__/
 # === Entorno virtual ===
 exam_ia_venv/
 
+# === Demo ===
+test_demo.py
+resultados/demo_log.json
+
 # === Sistema ===
 .DS_Store
 Thumbs.db
